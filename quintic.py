@@ -1,4 +1,5 @@
 import numpy as np
+from scipy.linalg import solve
 
 # TODO - complete this function
 def JMT(start, end, T):
@@ -25,4 +26,29 @@ def JMT(start, end, T):
     > JMT( [0, 10, 0], [10, 10, 0], 1)
     [0.0, 10.0, 0.0, 0.0, 0.0, 0.0]
     """
-    return [1,2,3,4,5,6]
+    i_pos = start[0]
+    i_vel = start[1]
+    i_acc = start[2]
+    e_pos = end[0]
+    e_vel = end[1]
+    e_acc = end[2]
+    T_2 = T**2
+    T_3 = T**3
+    T_4 = T**4
+    T_5 = T**5
+
+    # solve for a3, a4 and a5
+    A = np.array([[T_3, T_4, T_5], [3*T_2, 4*T_3, 5*T_4], [6*T, 12*T_2, 20*T_3]])
+    b0 = e_pos - (i_pos + i_vel*T + 0.5*i_acc*T_2)
+    b1 = e_vel - (i_vel*T + i_acc*T)
+    b2 = e_acc - i_acc
+    b = np.array([b0, b1, b2])
+    a3, a4, a5 = np.linalg.solve(A,b)
+    #a3, a4, a5 = solve(A, b)
+    #x = solve(A, b)
+
+    a0 = i_pos
+    a1 = i_vel
+    a2 = 0.5*i_acc
+
+    return [a0, a1, a2, a3, a4, a5]

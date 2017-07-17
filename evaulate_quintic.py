@@ -27,11 +27,11 @@ def close_enough(poly, target_poly, eps=0.01):
 	if type(target_poly) != type(poly):
 		target_poly = list(target_poly)
 	if len(poly) != len(target_poly):
-		print "your solution didn't have the correct number of terms"
+		print("your solution didn't have the correct number of terms")
 		return False
 	for term, target_term in zip(poly, target_poly):
 		if abs(term-target_term) > eps:
-			print "at least one of your terms differed from target by more than {}".format(eps)
+			print("at least one of your terms differed from target by more than {}".format(eps))
 			return False
 	return True
  
@@ -39,11 +39,12 @@ def main():
 	for test_case, answer in zip(TEST_CASES, ANSWERS):
 		start, end, T = test_case
 		jmt = JMT(start, end, T)
+		print(jmt)
 		correct = close_enough(jmt, answer)
 		if not correct:
-			print "try again!"
+			print("try again!")
 			return False
-	print "Nice work!"
+	print("Nice work!")
 	return True
 
 if __name__ == "__main__":
